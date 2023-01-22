@@ -2,13 +2,12 @@ const canvas = document.getElementById("cvs")
 canvas.style.backgroundColor = 'white'
 const ctx = canvas.getContext('2d');
 let icons = document.querySelectorAll('.icon');
+let transparentBg = true;
+document.getElementById('fill').value = '#ffffff'
 
 canvas.removeEventListener("mousedown", mouseDown);
 canvas.removeEventListener("mouseup", mouseUp);
 canvas.removeEventListener("mousemove", mouseMove);
-canvas.removeEventListener("touchstart", mouseDown);
-canvas.removeEventListener("touchmove", mouseMove);
-canvas.removeEventListener("touchend", mouseUp);
 let id;
 icons.forEach((icon) => {
     icon.addEventListener('click', () => {
@@ -20,9 +19,6 @@ icons.forEach((icon) => {
         canvas.addEventListener("mousedown", mouseDown);
         canvas.addEventListener("mousemove", mouseMove);
         canvas.addEventListener("mouseup", mouseUp);
-        canvas.addEventListener("touchstart", mouseDown);
-        canvas.addEventListener("touchmove", mouseMove);
-        canvas.addEventListener("touchend", mouseUp);
     })
 })
 let drawFlag = false;
@@ -33,6 +29,11 @@ let height = 0;
 let r = 0;
 function mouseDown(e) {
     ctx.beginPath();
+    ctx.strokeStyle = document.getElementById('stroke').value;
+    ctx.fillStyle = document.getElementById('fill').value;
+    if (transparentBg) {
+        ctx.fillStyle = '#ffffff00';
+    }
     sp.x = e.offsetX;
     sp.y = e.offsetY;
     drawFlag = true;
@@ -44,12 +45,10 @@ function mouseDown(e) {
 function mouseMove(e) {
     ep.x = e.offsetX;
     ep.y = e.offsetY;
-    ctx.strokeStyle = 'black';
-    ctx.fillStyle = 'black';
-    ctx.lineWidth = '1'
+    ctx.lineWidth = '2'
     if (id === 'freehand' && drawFlag) {
         ctx.lineTo(ep.x, ep.y);
-        ctx.lineWidth='0.4'
+        ctx.lineWidth = '0.4'
         ctx.stroke();
     } else if (id === 'rect' && drawFlag) {
         width = ep.x - sp.x;
@@ -70,6 +69,7 @@ function mouseUp(e) {
         ctx.stroke();
     } else if (id === 'rect') {
         ctx.rect(sp.x, sp.y, width, height);
+        ctx.fillRect(sp.x, sp.y, width, height)
         ctx.stroke()
         width = 0;
         height = 0;
@@ -78,7 +78,18 @@ function mouseUp(e) {
         let p2 = ep.y - sp.y;
         r = Math.sqrt(p1 ** 2 + p2 ** 2);
         ctx.arc(sp.x, sp.y, r, 0, 2 * Math.PI)
+        ctx.fill()
         ctx.stroke();
         r = 0;
     }
 }
+let btn = document.getElementById('btn');
+btn.addEventListener("click", () => {
+    transparentBg = true;
+    btn.classList.add('active');
+    document.getElementById('fill').value = '#ffffff'  
+})
+document.getElementById('fill').addEventListener("click", () => {
+    transparentBg = false;
+    btn.classList.remove('active')
+})

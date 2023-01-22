@@ -1,28 +1,27 @@
-*{
-    box-sizing: border-box;
-}
 body{
     padding: 0;
     margin: 0;
+    display: flex;
+    justify-content: center;
 }
 section{
     margin-top: 2rem;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     flex-direction: column;
 }
 .icons{
     display: flex;
     align-items: center;
-    justify-content: end;
+    justify-content: space-around;
     width: 650px;
-    /* border: 3px solid #000; */
+    border: 3px solid #a0c0b5;
     margin-bottom: 1rem;
 }
 .icon{
-    background-color: #d9e7e2;
+    background-color: #fff;
     border: 1px solid #c0cac6;
-    margin: 1rem 1rem 0;
+    margin: 0.4rem 1rem;
     width: 60px;
     height: 60px;
     border-radius: 50%;
@@ -35,7 +34,31 @@ section{
     -ms-border-radius: 50%;
     -o-border-radius: 50%;
 }
-.icons>.active{
-    background-color: #a0c0b5;
-    color: #fff;
+
+aside{
+    vertical-align: top;
+    display: inline-block;
+    text-align: center;
+    height: 500px;
+    margin-right: 1rem;
+    width: 130px;
+    border: 3px solid #a0c0b5;
 }
+aside p{
+    margin-top: 2rem;
+}
+button{
+    margin-top: 0.5rem;
+    background-color: transparent;
+    border: 1px solid #c0cac6;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+.icons>.active , .icon:hover, button.active, #btn:hover{
+    background-color: #a0c0b5;
+}   
